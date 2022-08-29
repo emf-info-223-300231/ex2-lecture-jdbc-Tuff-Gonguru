@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import java.io.File;
 import app.workers.DbWorkerItf;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -47,15 +49,31 @@ public class MainCtrl implements Initializable {
   @FXML
   public void actionPrevious(ActionEvent event) {
 
+      try {
+          
+          afficherPersonne(dbWrk.precedentPersonne());
+      } catch (MyDBException ex) {
+         
+      }
   }
 
   @FXML
   public void actionNext(ActionEvent event) {
 
+      try {
+          afficherPersonne(dbWrk.suivantPersonne());
+      } catch (MyDBException ex) {
+         
+      }
   }
 
   public void quitter() {
 
+      try {
+          dbWrk.deconnecter();
+      } catch (MyDBException ex) {
+          Logger.getLogger(MainCtrl.class.getName()).log(Level.SEVERE, null, ex);
+      }
     Platform.exit();
   }
 
@@ -64,6 +82,9 @@ public class MainCtrl implements Initializable {
    */
   private void afficherPersonne(Personne p) {
 
+      txtNom.setText(p.getNom());
+      txtPrenom.setText(p.getPrenom());
+     
   }
 
   private void ouvrirDB() {
@@ -83,6 +104,7 @@ public class MainCtrl implements Initializable {
       }
 
       System.out.println("------- DB OK ----------");
+     
       afficherPersonne(dbWrk.precedentPersonne());
 
     } catch (MyDBException ex) {
