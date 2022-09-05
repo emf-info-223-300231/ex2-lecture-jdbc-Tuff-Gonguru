@@ -88,18 +88,18 @@ public class DbWorker implements DbWorkerItf {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DbWorker.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
         return listePersonnes;
     }
 
     @Override
     public Personne precedentPersonne() throws MyDBException {
-        int prec = index;
+        //int prec = index;
         lirePersonnes();
         if (index == 0) {
             System.out.println("pas possible");
-            return listePersonnes.get(0);
+            index=0;
         } else {
             index = index - 1;
         }
