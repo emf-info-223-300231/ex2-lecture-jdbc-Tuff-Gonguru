@@ -14,4 +14,5 @@ public interface DbWorkerItf {
   Personne precedentPersonne() throws MyDBException;
   Personne suivantPersonne() throws MyDBException; 
 
+
 }
